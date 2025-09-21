@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Double-Click World Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100%; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    const map = L.map('map').setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Add marker on double click
+    map.on("dblclick", async function (e) {
+      const { lat, lng } = e.latlng;
+      const marker = L.marker([lat, lng]).addTo(map);
+
+      // Remove marker on double click
+      marker.on("dblclick", function () {
+        map.removeLayer(marker);
+      });
+
+      try {
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=jsonv2&addressdetails=1&zoom=18`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        let locationParts = [];
+
+        if (data && data.address) {
+          const a = data.address;
+          if (a.road) locationParts.push(a.road);
+          if (a.neighbourhood) locationParts.push(a.neighbourhood);
+          if (a.suburb) locationParts.push(a.suburb);
+          if (a.city || a.town || a.village) locationParts.push(a.city || a.town || a.village);
+          if (a.state) locationParts.push(a.state);
+          if (a.country) locationParts.push(a.country);
+        }
+
+        let locationName = locationParts.length > 0
+          ? locationParts.join(", ")
+          : (data.display_name || "Unknown location");
+
+        marker.bindPopup(
+          `<b>${locationName}</b><br>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}<br><i>(Double-tap marker to remove)</i>`
+        );
+      } catch (err) {
+        marker.bindPopup(
+          `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}<br>(Lookup failed)`
+        );
+      }
+    });
+
+    map.doubleClickZoom.disable();
+  </script>
+</body>
+</html>

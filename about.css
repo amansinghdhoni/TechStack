@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f9fbfd;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eaf6fc;
+  padding: 10px 20px;
+}
+
+.logo img {
+  width: 140px;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+nav a.active, nav a:hover {
+  color: #0066cc;
+}
+
+/* Hero Section */
+.hero {
+  background: #0066cc;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2em;
+}
+
+/* Company Story */
+.company-story {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.company-story h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #0066cc;
+}
+
+.company-story p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1em;
+  color: #555;
+}
+
+/* Mission & Vision */
+.mission-vision {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 50px 20px;
+  background: #f0f8ff;
+  flex-wrap: wrap;
+}
+
+.mission, .vision {
+  max-width: 400px;
+  text-align: center;
+}
+
+.mission h3, .vision h3 {
+  color: #0066cc;
+  margin-bottom: 10px;
+}
+
+/* Team Section */
+.team {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.team h2 {
+  color: #0066cc;
+  margin-bottom: 30px;
+  font-size: 2em;
+}
+
+.team-members {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.member {
+  max-width: 200px;
+}
+
+.member img {
+  width: 180px;       /* fixed width */
+  height: 180px;      /* fixed height */
+  border-radius: 50%; /* keep circular */
+  margin-bottom: 10px;
+  object-fit: cover;  /* ensures image covers the area without distortion */
+}
+
+.member h4 {
+  margin-bottom: 5px;
+}
+
+.member p {
+  color: #555;
+  font-size: 0.95em;
+}
+
+/* Footer */
+footer {
+  background: #eaf6fc;
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+}
